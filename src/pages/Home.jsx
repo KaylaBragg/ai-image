@@ -14,11 +14,7 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
 
   const handleGenerate = async () => {
-const fullPrompt = `No text or symbols. A bold, high-resolution illustration of ${formData.subject} in ${formData.style} style. Clear subject focus, sharp composition, vibrant contrast, rich textures, dynamic lighting. ${
-  formData.style.toLowerCase() === "comic book"
-    ? "Use thick ink outlines, comic shading, bold shadows, dramatic angles."
-    : "Use detailed textures, dynamic angles, and professional rendering."
-} Clean, subtle background. Optimized for print.`;
+const fullPrompt = `Make ${formData.subject} in ${formData.style} style.`;
 
 
     setPrompt(fullPrompt);
