@@ -1,0 +1,77 @@
+import React, { useState } from 'react';
+import PromptForm from '../components/PromptForm';
+import LoadingScreen from '../components/LoadingScreen';
+import ImageResult from '../components/ImageResult';
+
+export default function Home() {
+  const [formData, setFormData] = useState({
+    style: '',
+    subject: '',
+  });
+
+  const [prompt, setPrompt] = useState('');
+  const [status, setStatus] = useState('form');
+  const [imageUrl, setImageUrl] = useState('');
+
+  const handleGenerate = async () => {
+    const fullPrompt = `Do not include any text, writing, words, logos, fonts, watermarks, or symbols. An attention-grabbing, professionally illustrated scene featuring ${formData.subject}, rendered in a bold and stylized ${formData.style} style. Emphasize exaggerated details, rich textures, crisp lighting, strong focal point, and vivid color contrast. ${
+      formData.style.toLowerCase() === "comic book"
+        ? "Include thick inked outlines, comic-style shading, dynamic angles, and bold linework to mimic a hand-drawn graphic novel effect."
+        : ""
+    } Avoid clean or overly polished elements unless described.`;
+
+    setPrompt(fullPrompt);
+    setStatus('loading');
+    const generatedImageUrl = await generateImage(fullPrompt);
+    setImageUrl(generatedImageUrl);
+    setStatus('result');
+  };
+
+  const handleRestart = () => {
+    setFormData({ style: '', subject: '' });
+    setPrompt('');
+    setImageUrl('');
+    setStatus('form');
+  };
+
+  if (status === 'loading') return <LoadingScreen prompt={prompt} />;
+  if (status === 'result') {
+    return (
+      <ImageResult
+        imageUrl={imageUrl}
+        originalPrompt={prompt}
+        onRestart={handleRestart}
+        onRegenerate={handleGenerate}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#fef9f6] flex flex-col items-center justify-center px-4 font-sans text-[#3f454f]">
+      <div className="max-w-lg w-full bg-white p-6 rounded-2xl shadow-md space-y-4">
+        <h1 className="text-3xl font-bold text-[#ed5c2f] text-center">AI Image Generator</h1>
+        <PromptForm formData={formData} setFormData={setFormData} />
+        <button
+          onClick={handleGenerate}
+          disabled={!formData.style || !formData.subject}
+          className="w-full bg-[#f28230] hover:bg-[#fab331] text-white font-semibold py-2 px-4 rounded-lg transition mt-2"
+        >
+          Generate Image
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const generateImage = async (prompt) => {
+  const response = await fetch("http://localhost:3000/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await response.json();
+  return data.image;
+};
