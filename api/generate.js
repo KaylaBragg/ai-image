@@ -26,7 +26,7 @@ export default async function handler(req, res) {
           height: 512,
           aspect_ratio: "custom",
           output_format: "png",
-          safety_tolerance: 1,
+          safety_tolerance: 2,
           prompt_upsampling: false,
         },
       }),
