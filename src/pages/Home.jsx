@@ -62,9 +62,8 @@ export default function Home() {
     </div>
   );
 }
-
 const generateImage = async (prompt) => {
-  const response = await fetch("/api/generate")
+  const response = await fetch("/api/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -75,3 +74,4 @@ const generateImage = async (prompt) => {
   const data = await response.json();
   return data.image;
 };
+
