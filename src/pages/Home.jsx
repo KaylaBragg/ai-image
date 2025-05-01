@@ -14,11 +14,15 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
 
   const handleGenerate = async () => {
-    const fullPrompt = `Do not include any text, writing, words, logos, fonts, watermarks, or symbols. An attention-grabbing, professionally illustrated scene featuring ${formData.subject}, rendered in a bold and stylized ${formData.style} style. Emphasize exaggerated details, rich textures, crisp lighting, strong focal point, and vivid color contrast. ${
-      formData.style.toLowerCase() === "comic book"
-        ? "Include thick inked outlines, comic-style shading, dynamic angles, and bold linework to mimic a hand-drawn graphic novel effect."
-        : ""
-    } Avoid clean or overly polished elements unless described.`;
+const fullPrompt = `Absolutely no text, words, logos, or symbols. 
+A visually impactful, high-resolution scene of ${formData.subject}, illustrated in a bold ${formData.style} style. 
+Designed for direct mail marketing — should clearly highlight the subject with sharp composition, bright color contrast, and clear visual hierarchy. 
+Use rich textures, dynamic lighting, and commercial-grade rendering. ${
+  formData.style.toLowerCase() === "comic book"
+    ? "Include thick inked outlines, comic-style shading, bold shadows, and dramatic camera angles to emulate graphic novel art."
+    : ""
+} Background should be clean, complementary, or subtle — do not distract from subject. Optimized for print-ready clarity.`;
+
 
     setPrompt(fullPrompt);
     setStatus('loading');
