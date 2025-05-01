@@ -14,14 +14,11 @@ export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
 
   const handleGenerate = async () => {
-const fullPrompt = `Absolutely no text, words, logos, or symbols. 
-A visually impactful, high-resolution scene of ${formData.subject}, illustrated in a bold ${formData.style} style. 
-Designed for direct mail marketing — should clearly highlight the subject with sharp composition, bright color contrast, and clear visual hierarchy. 
-Use rich textures, dynamic lighting, and commercial-grade rendering. ${
+const fullPrompt = `No text or symbols. A bold, high-resolution illustration of ${formData.subject} in ${formData.style} style. Clear subject focus, sharp composition, vibrant contrast, rich textures, dynamic lighting. ${
   formData.style.toLowerCase() === "comic book"
-    ? "Include thick inked outlines, comic-style shading, bold shadows, and dramatic camera angles to emulate graphic novel art."
+    ? "Use thick ink outlines, comic shading, bold shadows, dramatic angles."
     : ""
-} Background should be clean, complementary, or subtle — do not distract from subject. Optimized for print-ready clarity.`;
+} Clean, subtle background. Optimized for print.`;
 
 
     setPrompt(fullPrompt);
